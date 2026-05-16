@@ -1,0 +1,16 @@
+{
+	"name": "mw-editor",
+	"type": "commonjs",
+	"scripts": {
+		"download-info": "Usage: node download.mjs <article-url>",
+		"lint": "npx eslint"
+	},
+	"author": "Maciej Nux",
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"eslint": "^10.0.1",
+		"eslint-plugin-jsdoc": "^62.7.0",
+		"globals": "^17.3.0",
+		"wikiploy": "2.x"
+	}
+}
