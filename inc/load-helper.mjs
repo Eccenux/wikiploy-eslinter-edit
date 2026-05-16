@@ -42,18 +42,31 @@ import path from 'node:path';
 
 function safePathPart(value) {
 	return value
-		.replaceAll('\\', '_')
-		.replaceAll('/', '_')
+		.replaceAll('\\', '.S.')
+		.replaceAll('/', '.S.')
 		.replaceAll(':', '.ns.')
-		.replaceAll('*', '_')
-		.replaceAll('?', '_')
-		.replaceAll('"', '_')
-		.replaceAll('<', '_')
-		.replaceAll('>', '_')
-		.replaceAll('|', '_')
-		.replace(/\s+/g, '_')
-		.replace(/_+/g, '_')
-		.slice(0, 180);
+		.replaceAll('*', '.X.') // not valid
+		.replaceAll('?', '.X.') // not valid
+		.replaceAll('"', '.X.') // not valid
+		.replaceAll('<', '.X.') // not valid
+		.replaceAll('>', '.X.') // not valid
+		.replaceAll('|', '.X.') // not valid
+		.replaceAll(/\s/g, '_')
+		// .replace(/_+/g, '_')
+		// .slice(0, 180)
+	;
+}
+
+/**
+ * Restore title from file.
+ * @param {string} value File name.
+ * @returns Original title on wiki (best effort).
+ */
+export function restoreUnsafePath(value) {
+	return value
+		.replaceAll('.S.', '/')
+		.replaceAll('.ns.', ':')
+	;
 }
 
 /**
