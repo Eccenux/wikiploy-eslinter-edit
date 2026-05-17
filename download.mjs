@@ -6,8 +6,8 @@ const outputPath = './src';
 
 async function main() {
 	let url;
-	//url = process.argv[2];
-	url = 'https://commons.wikimedia.org/w/index.php?title=MediaWiki%3APermissionsRequestsDesk.js&diff=1078848943&oldid=1078848781';
+	url = process.argv[2];
+	// url = 'https://commons.wikimedia.org/w/index.php?title=MediaWiki%3APermissionsRequestsDesk.js&diff=1078848943&oldid=1078848781';
 
 	if (!url) {
 		console.error("Usage: node download.mjs <article-url>");
