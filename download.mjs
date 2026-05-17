@@ -4,6 +4,15 @@ import { buildOutputPath, extractWikiTitle, loadSource } from "./inc/load-helper
 
 const outputPath = './src';
 
+/*
+Downloading a file:
+node download.mjs <url>
+
+E.g.:
+node download.mjs https://commons.wikimedia.org/w/index.php?title=MediaWiki%3APermissionsRequestsDesk.js
+
+*/
+
 async function main() {
 	let url;
 	url = process.argv[2];
