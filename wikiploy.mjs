@@ -17,6 +17,7 @@ ployBot.site = "pl.wikipedia.org";
 	// file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.PermissionsRequestsDesk.js`;
 	// file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.Group-sysop.js`;
 	file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`;
+	// file = String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`;
 
 	const configs = [];
 	addPloyConfig(configs, file);
