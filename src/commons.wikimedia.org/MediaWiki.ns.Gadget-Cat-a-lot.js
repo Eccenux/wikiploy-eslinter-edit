@@ -12,9 +12,10 @@
 * @author Completely rewritten by DieBuche (2010-2012)
 * @author Rillke (2012-2014)
 * @author Perhelion (2017)
-* @author Zache (2024)
-* @author Maciej Nux (2026)
+* @author Zache (2024-2026)
 * @author Outreachy 30: Adiba_anjum3, Ademola01, Gvutong, Nenyee, Nidhicodes1858, Shellygarg10, Isaacbriandt (2025)
+* @author Maciej Nux (2026)
+* @author 1Veertje (2026)
 
 * Requires [[MediaWiki:Gadget-SettingsManager.js]] and [[MediaWiki:Gadget-SettingsUI.js]] (properly registered) for per-user-settings
 * Requires [[MediaWiki:Gadget-libAPI.js]] for editing
@@ -44,25 +45,26 @@ var formattedNS = mw.config.get( 'wgFormattedNamespaces' ),
  */
 var msgs = {
 	// Preferences
-	// new added: 2025-11-04. Please translate.
+	// new added: 2026-05-17. Please translate.
 	// Use user language for i18n
-	'cat-a-lot-label'          : 'Cat-a-lot',
-	'cat-a-lot-watchlistpref'  : 'Watchlist preference concerning files edited with Cat-a-lot',
-	'cat-a-lot-watch_pref'     : 'According to your general preferences',
-	'cat-a-lot-watch_nochange' : 'Do not change watchstatus',
-	'cat-a-lot-watch_watch'    : 'Watch pages edited with Cat-a-lot',
-	'cat-a-lot-watch_unwatch'  : 'Remove pages while editing with Cat-a-lot from your watchlist',
-	'cat-a-lot-minorpref'      : 'Mark edits as minor (if you generally mark your edits as minor, this won’t change anything)',
-	'cat-a-lot-editpagespref'  : 'Allow categorising pages (including categories) that are not files',
-	'cat-a-lot-docleanuppref'  : 'Remove {{Check categories}} and other minor cleanup',
-	'cat-a-lot-uncatpref'      : 'Remove {{Uncategorized}}',
-	'cat-a-lot-subcatcountpref': 'Sub-categories to show at most',
-	'cat-a-lot-config-settings': 'Preferences',
-	'cat-a-lot-buttonpref'     : 'Use buttons instead of text-links',
-	'cat-a-lot-comment-label'  : 'Custom edit comment',
-	'cat-a-lot-remember-size'  : 'Remember size',
-	'cat-a-lot-remember-state' : 'Remember category',
-	'cat-a-lot-session-timeout': 'How long in minutes Cat-a-lot remembers its state when "Remember category" is selected',
+	'cat-a-lot-label'              : 'Cat-a-lot',
+	'cat-a-lot-watchlistpref'      : 'Watchlist preference concerning files edited with Cat-a-lot',
+	'cat-a-lot-watch_pref'         : 'According to your general preferences',
+	'cat-a-lot-watch_nochange'     : 'Do not change watchstatus',
+	'cat-a-lot-watch_watch'        : 'Watch pages edited with Cat-a-lot',
+	'cat-a-lot-watch_unwatch'      : 'Remove pages while editing with Cat-a-lot from your watchlist',
+	'cat-a-lot-minorpref'          : 'Mark edits as minor (if you generally mark your edits as minor, this won’t change anything)',
+	'cat-a-lot-editpagespref'      : 'Allow categorising pages (including categories) that are not files',
+	'cat-a-lot-docleanuppref'      : 'Remove {{Check categories}} and other minor cleanup',
+	'cat-a-lot-uncatpref'          : 'Remove {{Uncategorized}}',
+	'cat-a-lot-subcatcountpref'    : 'Sub-categories to show at most',
+	'cat-a-lot-config-settings'    : 'Preferences',
+	'cat-a-lot-buttonpref'         : 'Use buttons instead of text-links',
+	'cat-a-lot-comment-label'      : 'Custom edit comment',
+	'cat-a-lot-remember-size'      : 'Remember size',
+	'cat-a-lot-remember-state'     : 'Remember category',
+	'cat-a-lot-session-timeout'    : 'How long in minutes Cat-a-lot remembers its state when "Remember category" is selected',
+	'cat-a-lot-missingcatalertpref': 'Show a blocking alert when the target category does not exist; otherwise, just show a toast notification',
 
 	// Progress
 	'cat-a-lot-loading'          : 'Loading…',
@@ -1174,7 +1176,29 @@ that concept on your wiki, set it to null. Use blanks, not underscores. */
 	checkTargetCat: function ( page ) {
 		var is_dab = false; // disambiguation
 		var is_redir = typeof page.redirect === 'string'; // Hard redirect?
-		if ( typeof page.missing === 'string' ) { return alert( mw.msg( 'Apifeatureusage-warnings', mw.msg( 'Categorytree-not-found', page.title ) ) ); }
+
+		// if ( typeof page.missing === 'string' ) { return alert( mw.msg( 'Apifeatureusage-warnings', mw.msg( 'Categorytree-not-found', page.title ) ) ); }
+		if ( typeof page.missing === 'string' ) {
+			const catName = page.title.replace( /^Category:/, '' );
+			let warning = mw.msg(
+				'Apifeatureusage-warnings',
+				mw.msg( 'Categorytree-not-found', catName )
+			);
+			// alert() and mw.notify() do not render HTML
+			warning = warning.replace( /<\/?i>/g, '"' ); // italic to quotes
+
+			if ( this.settings.missingcatalert ) {
+				alert( warning );
+			} else {
+				mw.notify( warning, {
+					type: 'warn',
+					tag: 'cat-a-lot-targetcat-missing'
+				} );
+			}
+
+			return;
+		}
+		
 		var cats = page.categories;
 		this.is_hidden = page.categoryinfo && typeof page.categoryinfo.hidden === 'string';
 
@@ -2587,6 +2611,10 @@ that concept on your wiki, set it to null. Use blanks, not underscores. */
 		name: 'button',
 		'default': true,
 		label_i18n: 'buttonpref'
+	}, {
+		name: 'missingcatalert',
+		'default': true,
+		label_i18n: 'missingcatalertpref'
 	}, {
 		name: 'session_timeout',
 		'default': 60,
