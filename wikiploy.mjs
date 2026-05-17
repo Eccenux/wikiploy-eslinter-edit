@@ -15,7 +15,8 @@ ployBot.site = "pl.wikipedia.org";
 	// can use Windows or Linux style
 	let file;
 	// file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.PermissionsRequestsDesk.js`;
-	file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.Group-sysop.js`;
+	// file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.Group-sysop.js`;
+	file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`;
 
 	const configs = [];
 	addPloyConfig(configs, file);
