@@ -27,7 +27,7 @@ export default defineConfig([
 				...globals.browser,
 				...globals.node,
 				...globals.mocha,
-				// I18n: "readonly",
+				mw: "readonly",
 				// IsbnTools: "readonly",
 			},
 		},
