@@ -12,15 +12,13 @@ const ployBot = new Wikiploy(botpass);
 ployBot.site = "pl.wikipedia.org";
 
 (async () => {
-	// can use Windows or Linux style
-	let file;
-	// file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.PermissionsRequestsDesk.js`;
-	// file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.Group-sysop.js`;
-	file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`;
-	// file = String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`;
-
 	const configs = [];
-	addPloyConfig(configs, file);
+
+	// can use Windows or Linux style
+	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.PermissionsRequestsDesk.js`);
+	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Group-sysop.js`);
+	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
+	// addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
 
 	// custom summary
 	let summary = 'change from Github'; // default
