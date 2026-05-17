@@ -38,77 +38,81 @@ var formattedNS = mw.config.get( 'wgFormattedNamespaces' ),
 	userGrp = mw.config.get( 'wgUserGroups' ),
 	project = mw.config.get( 'wgDBname' );
 
+/**
+ * I18n.
+ * Note! Keep in sync with: [[Help:Gadget-Cat-a-lot/translating]]
+ */
 var msgs = {
-// Preferences
-// new: added 2012-09-19. Please translate.
-// Use user language for i18n
-	'cat-a-lot-label': 'Cat-a-lot',
-	'cat-a-lot-watchlistpref': 'Watchlist preference concerning files edited with Cat-a-lot',
-	'cat-a-lot-watch_pref': 'According to your general preferences',
-	'cat-a-lot-watch_nochange': 'Do not change watchstatus',
-	'cat-a-lot-watch_watch': 'Watch pages edited with Cat-a-lot',
-	'cat-a-lot-watch_unwatch': 'Remove pages while editing with Cat-a-lot from your watchlist',
-	'cat-a-lot-minorpref': 'Mark edits as minor (if you generally mark your edits as minor, this won’t change anything)',
-	'cat-a-lot-editpagespref': 'Allow categorising pages (including categories) that are not files',
-	'cat-a-lot-docleanuppref': 'Remove {{Check categories}} and other minor cleanup',
-	'cat-a-lot-uncatpref': 'Remove {{Uncategorized}}',
+	// Preferences
+	// new added: 2025-11-04. Please translate.
+	// Use user language for i18n
+	'cat-a-lot-label'          : 'Cat-a-lot',
+	'cat-a-lot-watchlistpref'  : 'Watchlist preference concerning files edited with Cat-a-lot',
+	'cat-a-lot-watch_pref'     : 'According to your general preferences',
+	'cat-a-lot-watch_nochange' : 'Do not change watchstatus',
+	'cat-a-lot-watch_watch'    : 'Watch pages edited with Cat-a-lot',
+	'cat-a-lot-watch_unwatch'  : 'Remove pages while editing with Cat-a-lot from your watchlist',
+	'cat-a-lot-minorpref'      : 'Mark edits as minor (if you generally mark your edits as minor, this won’t change anything)',
+	'cat-a-lot-editpagespref'  : 'Allow categorising pages (including categories) that are not files',
+	'cat-a-lot-docleanuppref'  : 'Remove {{Check categories}} and other minor cleanup',
+	'cat-a-lot-uncatpref'      : 'Remove {{Uncategorized}}',
 	'cat-a-lot-subcatcountpref': 'Sub-categories to show at most',
 	'cat-a-lot-config-settings': 'Preferences',
-	'cat-a-lot-buttonpref': 'Use buttons instead of text-links',
-	'cat-a-lot-comment-label': 'Custom edit comment',
-	'cat-a-lot-remember-size': 'Remember size',
-	'cat-a-lot-remember-state': 'Remember category',
+	'cat-a-lot-buttonpref'     : 'Use buttons instead of text-links',
+	'cat-a-lot-comment-label'  : 'Custom edit comment',
+	'cat-a-lot-remember-size'  : 'Remember size',
+	'cat-a-lot-remember-state' : 'Remember category',
 	'cat-a-lot-session-timeout': 'How long in minutes Cat-a-lot remembers its state when "Remember category" is selected',
 
 	// Progress
-	'cat-a-lot-loading': 'Loading…',
-	'cat-a-lot-editing': 'Editing page',
-	'cat-a-lot-of': 'of ',
-	'cat-a-lot-skipped-already': 'The following {{PLURAL:$1|1=page was|$1 pages were}} skipped, because the page was already in the category:',
+	'cat-a-lot-loading'          : 'Loading…',
+	'cat-a-lot-editing'          : 'Editing page',
+	'cat-a-lot-of'               : 'of ',
+	'cat-a-lot-skipped-already'  : 'The following {{PLURAL:$1|1=page was|$1 pages were}} skipped, because the page was already in the category:',
 	'cat-a-lot-skipped-not-found': 'The following {{PLURAL:$1|1=page was|$1 pages were}} skipped, because the old category could not be found:',
-	'cat-a-lot-skipped-server': 'The following {{PLURAL:$1|1=page|$1 pages}} couldn’t be changed, since there were problems connecting to the server:',
-	'cat-a-lot-all-done': 'All pages are processed.',
-	'cat-a-lot-done': 'Done!', // mw.msg("Feedback-close")
-	'cat-a-lot-added-cat': 'Added category $1',
-	'cat-a-lot-copied-cat': 'Copied to category $1',
-	'cat-a-lot-moved-cat': 'Moved to category $1',
-	'cat-a-lot-removed-cat': 'Removed from category $1',
+	'cat-a-lot-skipped-server'   : 'The following {{PLURAL:$1|1=page|$1 pages}} couldn’t be changed, since there were problems connecting to the server:',
+	'cat-a-lot-all-done'         : 'All pages are processed.',
+	'cat-a-lot-done'             : 'Done!',
+	'cat-a-lot-added-cat'        : 'Added category $1',
+	'cat-a-lot-copied-cat'       : 'Copied to category $1',
+	'cat-a-lot-moved-cat'        : 'Moved to category $1',
+	'cat-a-lot-removed-cat'      : 'Removed from category $1',
 	// 'cat-a-lot-return-to-page': 'Return to page',
-	// 'cat-a-lot-cat-not-found': 'Category not found.',
+	// 'cat-a-lot-cat-not-found' : 'Category not found.',
 
 	// as in 17 files selected
-	'cat-a-lot-files-selected': '{{PLURAL:$1|1=One file|$1 files}} selected.',
-	'cat-a-lot-pe_file': '$1 {{PLURAL:$1|page|pages}} of $2 affected',
-	'cat-a-lot-parent-cat': 'Has parent-category: ',
-	'cat-a-lot-sub-cat': 'Has sub-category: ',
+	'cat-a-lot-files-selected'   : '{{PLURAL:$1|1=One file|$1 files}} selected.',
+	'cat-a-lot-pe_file'          : '$1 {{PLURAL:$1|page|pages}} of $2 affected',
+	'cat-a-lot-parent-cat'       : 'Has parent-category: ',
+	'cat-a-lot-sub-cat'          : 'Has sub-category: ',
 
 	// Actions
-	'cat-a-lot-copy': 'Copy',
-	'cat-a-lot-move': 'Move',
-	'cat-a-lot-add': 'Add',
+	'cat-a-lot-copy'           : 'Copy',
+	'cat-a-lot-move'           : 'Move',
+	'cat-a-lot-add'            : 'Add',
 	// 'cat-a-lot-remove-from-cat': 'Remove from this category',
-	'cat-a-lot-overcat': 'Check over-categorization',
-	'cat-a-lot-enter-name': 'Enter category name',
-	'cat-a-lot-select': 'Select',
-	'cat-a-lot-all': 'all',
-	'cat-a-lot-none': 'none',
-	'cat-a-lot-search': 'Search',
-	// 'cat-a-lot-none-selected': 'No files selected!', 'Ooui-selectfile-placeholder'
+	'cat-a-lot-overcat'        : 'Check over-categorization',
+	'cat-a-lot-enter-name'     : 'Enter category name',
+	'cat-a-lot-select'         : 'Select',
+	'cat-a-lot-all'            : 'all',
+	'cat-a-lot-none'           : 'none',
+	// 'cat-a-lot-none-selected': 'No files selected!',
+	'cat-a-lot-search'         : 'Search',
 
 	// Summaries (project language):
 	'cat-a-lot-pref-save-summary': 'Updating user preferences',
-	'cat-a-lot-summary-add': 'Adding [[Category:$1]]',
-	'cat-a-lot-summary-copy': 'Copying from [[Category:$1]] to [[Category:$2]]',
-	'cat-a-lot-summary-move': 'Moving from [[Category:$1]] to [[Category:$2]]',
-	'cat-a-lot-summary-remove': 'Removing from [[Category:$1]]',
-	'cat-a-lot-prefix-summary': '',
-	'cat-a-lot-using-summary': ' using [[c:Help:Cat-a-lot|Cat-a-lot]]',
+	'cat-a-lot-summary-add'      : 'Adding [[Category:$1]]',
+	'cat-a-lot-summary-copy'     : 'Copying from [[Category:$1]] to [[Category:$2]]',
+	'cat-a-lot-summary-move'     : 'Moving from [[Category:$1]] to [[Category:$2]]',
+	'cat-a-lot-summary-remove'   : 'Removing from [[Category:$1]]',
+	'cat-a-lot-prefix-summary'   : '', // Some text to prepend to the edit summary. Set this to an empty string if you use 'using'.
+	'cat-a-lot-using-summary'    : ' using [[c:Help:Cat-a-lot|Cat-a-lot]]', // Some text to append to the edit summary. Set this to an empty string if you use 'prefix'.
 
 	// Error dialog:
-	'cat-a-lot-error-title': 'Error occurred while editing',
-	'cat-a-lot-error': 'An error occurred while editing $1',
-	'cat-a-lot-ignore-error': 'Ignore and continue',
-	'cat-a-lot-stop-editing': 'Stop all editing',
+	'cat-a-lot-error-title'  : 'Error occurred while editing',
+	'cat-a-lot-error'        : 'An error occurred while editing $1',
+	'cat-a-lot-ignore-error' : 'Ignore and continue',
+	'cat-a-lot-stop-editing' : 'Stop all editing',
 	
 	//Self-categorization:
 	'cat-a-lot-skip-self-cat-confirm': 'Skipping self-categorization: "$1" will not be copied or moved to itself. Proceed with other pages?',
