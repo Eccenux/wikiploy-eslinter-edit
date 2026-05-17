@@ -26,7 +26,7 @@
 */
 
 /* global jQuery, mediaWiki */
-/* eslint one-var:0, vars-on-top:0, no-underscore-dangle:0, valid-jsdoc:0,
+/* eslint one-var:0, vars-on-top:0, no-underscore-dangle:0, 
 curly:0, camelcase:0, no-useless-escape:0, no-alert:0 */ // extends: wikimedia
 /* jshint unused:true, forin:false, smarttabs:true, loopfunc:true, browser:true */
 
