@@ -17,9 +17,12 @@ ployBot.site = "pl.wikipedia.org";
 	// can use Windows or Linux style
 	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.PermissionsRequestsDesk.js`);
 	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Group-sysop.js`);
-	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
-	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js.S.pl`);
-	addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
+
+	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
+	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js.S.pl`);
+	// addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
+
+	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.js`);
 
 	// custom summary
 	let summary = 'change from Github'; // default
