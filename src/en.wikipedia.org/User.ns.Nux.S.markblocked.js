@@ -105,16 +105,17 @@ Forked from https://ru.wikipedia.org/w/index.php?title=MediaWiki:Gadget-markbloc
 		const requests = [];
 
 		while ( users.length > 0 ) {
+			const batchUsers = users.splice( 0, 50 ).join( '|' );
+
 			const apiCall = new URL( mw.util.wikiScript( 'api' ), location.origin );
 			apiCall.search = new URLSearchParams( {
 				action: 'query',
 				format: 'json',
 				list: 'blocks',
 				bklimit: '100',
-				bkusers: users.splice( 0, 50 ).join( '|' ),
+				bkusers: batchUsers,
 				bkprop: 'user|by|timestamp|expiry|reason|flags|restrictions',
 			} );
-
 			requests.push( fetch( apiCall, {
 				method: 'GET',
 				credentials: 'include',
@@ -125,8 +126,52 @@ Forked from https://ru.wikipedia.org/w/index.php?title=MediaWiki:Gadget-markbloc
 				const resp = await response.json();
 
 				const serverTime = new Date( response.headers.get( 'Date' ) );
-				console.debug( 'date:', response.headers.get( 'Date' ), resp );
-				markLinks( resp, serverTime, userLinks );
+				let list;
+				if ( resp && ( list = resp.query ) && ( list = list.blocks ) ) {
+					markLinks( list, serverTime, userLinks );
+				}
+			} ) );
+
+			// globalblocks
+			/*
+				/w/api.php?action=query&format=json&list=globalblocks&formatversion=2&bgtargets=~2026-35886-77%7CAgnieszkaLaura56789%7CIzabelaNatalia56789&bgprop=target%7Cby%7Ctimestamp%7Cexpiry%7Creason
+				{
+					"target": "AgnieszkaLaura56789",
+					"anononly": false,
+					"account-creation-disabled": true,
+					"block-email": false,
+					"autoblocking-enabled": true,
+					"automatic": false,
+					"by": "Teles",
+					"bywiki": "metawiki",
+					"timestamp": "2026-06-21T01:50:17Z",
+					"expiry": "2026-09-21T01:50:17Z",
+					"reason": "Cross-wiki abuse"
+				}
+			*/
+			const globalCall = new URL( mw.util.wikiScript( 'api' ), location.origin );
+			globalCall.search = new URLSearchParams( {
+				action: 'query',
+				format: 'json',
+				list: 'globalblocks',
+				bglimit: '100',
+				bgtargets: batchUsers,
+				bgprop: 'target|by|timestamp|expiry|reason',
+			} );
+			requests.push( fetch( globalCall, {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Accept': 'application/json'
+				}
+			} ).then( async ( response ) => {
+				const resp = await response.json();
+
+				const serverTime = new Date( response.headers.get( 'Date' ) );
+				let list;
+				if ( resp && ( list = resp.query ) && ( list = list.globalblocks ) ) {
+					markLinks( list, serverTime, userLinks );
+				}
 			} ) );
 		}
 
@@ -141,14 +186,9 @@ Forked from https://ru.wikipedia.org/w/index.php?title=MediaWiki:Gadget-markbloc
 	/**
 	 * Receive data and mark links
 	 */
-	function markLinks( resp, serverTime, userLinks ) {
-		let list;
-		if ( !resp || !( list = resp.query ) || !( list = list.blocks ) ) {
-			return;
-		}
+	function markLinks( list, serverTime, userLinks ) {
 
-		for ( let i = 0; i < list.length; i++ ) {
-			let block = list[ i ];
+		for ( let block of list ) {
 			const partial = 'partial' in block; // Partial block
 			let htmlClass, blockTime;
 			if ( /^in/.test( block.expiry ) ) {
@@ -172,7 +212,7 @@ Forked from https://ru.wikipedia.org/w/index.php?title=MediaWiki:Gadget-markbloc
 				.replace( '$2', block.by )
 				.replace( '$3', block.reason )
 				.replace( '$4', inHours( serverTime - parseTimestamp( block.timestamp ) ) );
-			if ( partial && !window.mbHidePartialBlockRestrictions ) {
+			if ( partial && block.restrictions && !window.mbHidePartialBlockRestrictions ) {
 				let pbDetails = [];
 				if ( block.restrictions.pages ) {
 					pbDetails.push ( ( block.restrictions.pages.length == 1 ? 'page ' : 'pages ' ) + makeCommaSeparatedList( block.restrictions.pages.map( (page) => '[[' + page.title + ']]' ) ) );
@@ -193,7 +233,8 @@ Forked from https://ru.wikipedia.org/w/index.php?title=MediaWiki:Gadget-markbloc
 				}
 				tooltipString = tooltipString.replace ( '$5', makeCommaSeparatedList( pbDetails ) );
 			}
-			let links = userLinks[ block.user ];
+			let username = block.user ? block.user : block.target;
+			let links = userLinks[ username ];
 			for ( let k = 0; links && k < links.length; k++ ) {
 				let $link = $( links[ k ] );
 				$link = $link.addClass( htmlClass );
