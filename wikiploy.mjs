@@ -23,8 +23,10 @@ ployBot.site = "pl.wikipedia.org";
 	// addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
 
 	// example: https://commons.wikimedia.org/wiki/Template:OWID/Chicken_meat_production
-	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.js`);
-	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.css`);
+	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.js`);
+	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.css`);
+
+	addPloyConfig(configs, String.raw`src\en.wikipedia.org\User.ns.Nux.S.markblocked.js`);
 
 	// custom summary
 	let summary = 'change from Github'; // default
