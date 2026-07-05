@@ -35,7 +35,7 @@ export default defineConfig([
 			// Styl / czytelność
 			indent: ["error", "tab", { SwitchCase: 1 }],
 			semi: ["error", "always"],
-			"comma-dangle": ["warn", "always-multiline"],
+			// "comma-dangle": ["warn", "always-multiline"],
 			"no-trailing-spaces": "error",
 
 			// Potencjalne błędy / higiena

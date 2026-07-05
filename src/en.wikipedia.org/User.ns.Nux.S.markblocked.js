@@ -101,29 +101,37 @@ Forked from https://ru.wikipedia.org/w/index.php?title=MediaWiki:Gadget-markbloc
 
 		// API requests
 		$container.addClass( 'markblocked-loading' );
-		const api = new mw.Api();
+
 		const requests = [];
+
 		while ( users.length > 0 ) {
-			let req = api.get( {
+			const apiCall = new URL( mw.util.wikiScript( 'api' ), location.origin );
+			apiCall.search = new URLSearchParams( {
 				action: 'query',
+				format: 'json',
 				list: 'blocks',
-				bklimit: 100,
+				bklimit: '100',
 				bkusers: users.splice( 0, 50 ).join( '|' ),
 				bkprop: 'user|by|timestamp|expiry|reason|flags|restrictions',
-				// no need for 'id'
-			} ).then( ( resp, _status, xhr ) => ( {
-				resp,
-				xhr,
-			} ) );
-			requests.push( req );
-		}
-		try {
-			const responses = await Promise.all( requests );
+			} );
 
-			for ( const { resp, xhr } of responses ) {
-				const serverTime = new Date( xhr.getResponseHeader( 'Date' ) );
+			requests.push( fetch( apiCall, {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Accept': 'application/json'
+				}
+			} ).then( async ( response ) => {
+				const resp = await response.json();
+
+				const serverTime = new Date( response.headers.get( 'Date' ) );
+				console.debug( 'date:', response.headers.get( 'Date' ), resp );
 				markLinks( resp, serverTime, userLinks );
-			}
+			} ) );
+		}
+
+		try {
+			await Promise.all( requests );
 		} finally {
 			$container.removeClass( 'markblocked-loading' );
 			$( '#ca-showblocks' ).parent().remove(); // remove added portlet link
