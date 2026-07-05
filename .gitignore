@@ -4,3 +4,5 @@
 *.priv
 .priv
 bot.config.*
+src/en.wikipedia.org/User.ns.Nux.*
+src/pl.wikipedia.org/User.ns.Nux.*
