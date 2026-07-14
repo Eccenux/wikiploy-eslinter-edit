@@ -26,7 +26,8 @@ ployBot.site = "pl.wikipedia.org";
 	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.js`);
 	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.css`);
 
-	addPloyConfig(configs, String.raw`src\en.wikipedia.org\User.ns.Nux.S.markblocked.js`);
+	// addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-quickeditcounter.js`);
+	addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-topalert.css`);
 
 	// custom summary
 	let summary = 'change from Github'; // default

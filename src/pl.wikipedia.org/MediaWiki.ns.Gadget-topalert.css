@@ -1,0 +1,72 @@
+/* ukrycie domyślnego powiadomienia */
+#pt-talk-alert {
+  display:none;
+}
+
+
+#mw-echo-close-box {
+	float: right;
+	height: 17px;
+	width: 17px;
+	margin: 10px 13px 0 2px;
+	cursor: pointer;
+}
+#mw-echo-sliding-alert {
+	position: fixed;
+	top: 0.5em;
+	z-index: 1000;
+	margin: 0 auto;
+	width: 450px;
+	left: 0;
+	right: 0;
+	padding: 0;
+	background-color: #FFD86E;
+	border-radius: 5px;
+}
+/* Deklaracje dla ciemnego motywu wybranego na wiki */
+@media screen {
+    html.skin-theme-clientpref-night {
+		#mw-echo-sliding-alert { background-color: #220e0d; border: 1px solid #777; }
+		#mw-echo-close-box img { filter: invert(1); }
+	}
+}
+/* Deklaracje dla ciemnego motywu wybranego w systemie */
+@media screen and (prefers-color-scheme: dark) {
+	html.skin-theme-clientpref-os {
+		#mw-echo-sliding-alert { background-color: #220e0d; border: 1px solid #777; }
+		#mw-echo-close-box img { filter: invert(1); }
+	}
+}
+#mw-echo-alert-text {
+	margin: 0px 3em 0px 1.4em;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: sans-serif;
+	line-height: 38px;
+	white-space: nowrap;
+}
+
+@media (max-width: 490px) {
+	#mw-echo-sliding-alert {
+		display: flex;
+		flex-flow: row-reverse;
+		align-items: center;
+
+		box-sizing: border-box;
+		width: 97%;
+		padding: .7em 1.2em;
+		gap: .5em;
+	}
+	#mw-echo-alert-text {
+		flex: 1;
+		white-space: normal;
+		line-height: 1.5em;
+		margin: 0;
+	}
+	#mw-echo-close-box {
+		float: none;
+		margin: -.5em;
+		padding: .5em;
+		margin-right: -1em;
+	}
+}
