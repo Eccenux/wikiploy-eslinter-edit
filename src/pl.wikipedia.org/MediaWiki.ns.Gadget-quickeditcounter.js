@@ -29,8 +29,7 @@ window.qecGadget = {
 			requestid:	new Date().getTime()
 		};
 
-		const api = new mw.Api();
-		api.get(request).then(( result ) => {
+		jQuery.getJSON( mw.util.wikiScript( 'api' ), request, ( result ) => {
 			jQuery(() => { // make sure doc is ready
 				if (result) {
 					this.showResults(result);
