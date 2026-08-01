@@ -26,10 +26,13 @@ ployBot.site = "pl.wikipedia.org";
 	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.js`);
 	// addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-owidslider.css`);
 
-	addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-quickeditcounter.js`);
+	// addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-quickeditcounter.js`);
 	// addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-topalert.css`);
+
 	//addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Popups-strings.js`);
 	//addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Popups.js`);
+
+	addPloyConfig(configs, String.raw`src\www.wikidata.org\User.ns.Nux.S.DragNDrop.js`);
 
 	// custom summary
 	let summary = 'change from Github'; // default

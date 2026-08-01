@@ -28,58 +28,56 @@ mw.loader.using(
 );
 
 function dragNDrop() {
-	var itemId = mw.config.get('wbEntityId');
-	var lang = mw.config.get('wgUserLanguage');
+	let itemId = mw.config.get('wbEntityId');
+	let lang = mw.config.get('wgUserLanguage');
 
-	var api = new mw.Api();
-	var dialog = {};
-	var params = {};
-	var windowManager = null;
+	let api = new mw.Api();
+	let dialog = {};
+	let params = {};
+	let windowManager = null;
 
-	var texts = (function texts() {
-		var translations = {
-				en: {
-					close: 'Close',
-					loading: 'Loading...',
-					noSuggestedProperties: 'No suggestions found. You will find list of frequently used properties below.',
-					open: 'Open',
-					saveFail: 'Unfortunately, saving failed',
-					searchPlaceholder: 'Search for property by name or number',
-					searchResults: 'Search results',
-					suggestedProperties: 'Suggested properties',
-					addStatment: 'Add statement',
-					addExistingStatement: 'Add statement to already added property',
-					valueAlreadyUsed: 'This value is already used %s time(s)!',
-				},
-				pl: {
-					close: 'Zamknij',
-					loading: 'Wczytywanie...',
-					open: 'Otwórz',
-					saveFail: 'Zapisywane nie powiodło się.',
-					noSuggestedProperties: 'Brak wyników. Poniżej znajduje się lista często używanych właściwości.',
-					searchPlaceholder: 'Szukaj właściwości według nazwy lub numeru',
-					searchResults: 'Wyniki wyszukiwania',
-					suggestedProperties: 'Sugerowane właściwości',
-					addStatment: 'Dodaj stwierdzenie',
-					addExistingStatement: 'Dodaj stwierdzenie do już istniejącej właściwości',
-					valueAlreadyUsed: 'Ta wartość została już użyta %s raz(y)!',
-				},
+	// i18n
+	let texts = (function texts() {
+		const translations = {
+			en: {
+				close: 'Close',
+				loading: 'Loading...',
+				noSuggestedProperties: 'No suggestions found. You will find list of frequently used properties below.',
+				open: 'Open',
+				saveFail: 'Unfortunately, saving failed',
+				searchPlaceholder: 'Search for property by name or number',
+				searchResults: 'Search results',
+				suggestedProperties: 'Suggested properties',
+				addStatment: 'Add statement',
+				addExistingStatement: 'Add statement to already added property',
+				valueAlreadyUsed: 'This value is already used %s time(s)!',
 			},
-			chain = mw.language.getFallbackLanguageChain(),
-			len = chain.length,
-			ret = {},
-			i = len - 1;
+			pl: {
+				close: 'Zamknij',
+				loading: 'Wczytywanie...',
+				open: 'Otwórz',
+				saveFail: 'Zapisywane nie powiodło się.',
+				noSuggestedProperties: 'Brak wyników. Poniżej znajduje się lista często używanych właściwości.',
+				searchPlaceholder: 'Szukaj właściwości według nazwy lub numeru',
+				searchResults: 'Wyniki wyszukiwania',
+				suggestedProperties: 'Sugerowane właściwości',
+				addStatment: 'Dodaj stwierdzenie',
+				addExistingStatement: 'Dodaj stwierdzenie do już istniejącej właściwości',
+				valueAlreadyUsed: 'Ta wartość została już użyta %s raz(y)!',
+			},
+		};
+		let chain = mw.language.getFallbackLanguageChain();
+		let ret = {};
 
-		while (i >= 0) {
-			if (translations.hasOwnProperty(chain[i])) {
-				$.extend(ret, translations[chain[i]]);
+		for (const language of chain.reverse()) {
+			if (Object.prototype.hasOwnProperty.call(translations, language)) {
+				Object.assign(ret, translations[language]);
 			}
-			i -= 1;
 		}
 		return ret;
 	}());
 
-	var wikiIdentifiers = {
+	const wikiIdentifiers = {
 		arwikipedia: 'Q199700',
 		cawikipedia: 'Q199693',
 		cebwikipedia: 'Q837615',
@@ -723,16 +721,16 @@ function dragNDrop() {
 	 * Action on coordinates drop.
 	 */
 	function dropCoordinates(link) {
-		var match = link
+		let match = link
 			.attr('href')
 			.replace(/_/g,' ')
 			.match(/\bgeohack\.php.*params=([0-9\.+\-]+) ([NS]) ([0-9\.+\-]+) ([EW])/);
 
 		if (match) {
-			var lat = match[1] * 1 ;
-			var lon = match[3] * 1 ;
-			if(match[2] === 'S') { lat = -lat };
-			if(match[4] === 'W') { lon = -lon };
+			let lat = match[1] * 1 ;
+			let lon = match[3] * 1 ;
+			if(match[2] === 'S') lat = -lat;
+			if(match[4] === 'W') lon = -lon;
 
 			showAddStatementDialog({
 				name: decodeURIComponent([lat, lon].join(' / ')),
