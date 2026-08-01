@@ -966,22 +966,30 @@ function dragNDrop() {
 	}
 
 	/**
-	 *
+	 * Transform links in the article (in the overlay).
 	 */
 	function transformLink() {
 		var link = $(this);
-		var badClasses = ['.new', '.external', '.extiw'].join(',');
+
+		// skip anchors (includes ToC and refs)
+		let href = link.attr('href');
+		if (!href || href.startsWith('#')) {
+			return;
+		}
 
 		if (link.hasClass('new')) {
 			removeLink(link);
+			return;
 		}
 
 		if (link.hasClass('external')) {
 			transformExtLink(link);
+			return;
 		}
 
-		if (!link.is(badClasses)) {
+		if (!link.hasClass('extiw')) {
 			transformWikiLink(link);
+			return;
 		}
 	}
 
