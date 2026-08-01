@@ -1,14 +1,20 @@
-/* eslint-disable no-useless-escape */
 /**
- * Drag'n'drop Wikipedia links as WD statements.
+ * Drag'n'Drop (DnD).
+ *
+ * Drag links from Wikipedia article frame to WD to create statements.
  *
  * For created statements adds "imported from" (P143) as reference.
+ *
+ * Note that the trigger to open Wikipedia article is a button beside interwiki.
+ * The trigger button is using this image:
+ * https://commons.wikimedia.org/wiki/File:PICOL_Comment_add.svg
  *
  * Primary author: Yarl.
  * Other authors: Nux.
  */
 
 /* global $, OO */
+/* eslint-disable no-useless-escape */
 
 // load deps and run `dragNDrop()` when ready
 mw.loader.using(
@@ -656,11 +662,20 @@ function dragNDrop() {
 	function addButtonToSitelink($sitelinkView, projectName) {
 		var $link = $sitelinkView.find('a[hreflang]');
 
-		var $button = $('<span></span>')
+		var $button = $('<button></button>')
 			.addClass('dragndrop__button')
-			.attr('project', projectName)
-			.attr('lang', $link.attr('hreflang'))
-			.attr('title', $link.attr('title'))
+			.attr('data-project', projectName)
+			.attr('data-lang', $link.attr('hreflang'))
+			.attr('data-page', $link.attr('title'))
+			.attr('title', 'DnD: ' + $link.attr('title'))
+			.append(
+				$('<img>', {
+					src: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/PICOL_Comment_add.svg',
+					alt: 'DnD',
+					width: 15,
+					height: 15
+				})
+			)
 			.click(openOverlay);
 
 		$sitelinkView.prepend($button);
@@ -941,15 +956,15 @@ function dragNDrop() {
 	}
 
 	/**
-	 *
+	 * Open article frame/dialog.
 	 */
 	function openOverlay() {
-		var link = $(this);
+		let $btn = $(this);
 
 		params = {
-			lang: link.attr('lang'),
-			project: link.attr('project'),
-			title: link.attr('title'),
+			lang: $btn.attr('data-lang'),
+			project: $btn.attr('data-project'),
+			title: $btn.attr('data-page'),
 		};
 
 		var $overlayHeader = getOverlayHeader(params.title);

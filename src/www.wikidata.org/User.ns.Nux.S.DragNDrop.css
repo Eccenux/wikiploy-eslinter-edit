@@ -33,12 +33,12 @@
 }
 
 .dragndrop__button {
-  background: url(//upload.wikimedia.org/wikipedia/commons/thumb/d/d5/PICOL_Comment_add.svg/15px-PICOL_Comment_add.svg.png) no-repeat center;
+  /* background: url(https://upload.wikimedia.org/wikipedia/commons/d/d5/PICOL_Comment_add.svg) no-repeat center;
+  background-size: 15px; */
   float: right;
-  height: 14px;
+  /* height: 14px; */
   margin-right: 0.5em;
   padding: 4px 10px;
-  cursor: pointer;
 }
 
 .dragndrop__window-header .oo-ui-progressBarWidget {
