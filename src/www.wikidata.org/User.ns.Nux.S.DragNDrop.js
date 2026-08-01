@@ -628,9 +628,49 @@ function dragNDrop() {
 	}
 
 	/**
+	 * Add an URL reference.
+	 * @param {string} claimId Statement ID, for example: "Q140427863$A5DBDA21-B8A2-4DC2-836D-69B1F53BDBEB".
+	 * @param {string} url URL to add as a reference.
+	 * @param {Function} callback Optional callback.
+	 */
+	function addUrlReference(claimId, url, callback) {
+		var snaks = {
+			P854: [{
+				snaktype: 'value',
+				property: 'P854', // reference URL
+				datavalue: {
+					type: 'string',
+					value: url,
+				},
+			}],
+			P813: [{
+				snaktype: 'value',
+				property: 'P813', // retrieved
+				datavalue: {
+					type: 'time',
+					value: {
+						after: 0,
+						before: 0,
+						calendarmodel: 'http://www.wikidata.org/entity/Q1985727',
+						precision: 11,
+						time: '+' + new Date().toISOString().substring(0, 10) + 'T00:00:00Z',
+						timezone: 0,
+					},
+				},
+			}],
+		};
+		genericAPIaction({
+			action: 'wbsetreference',
+			statement: claimId,
+			snaks: JSON.stringify(snaks),
+		}, callback);
+	}
+
+	/**
 	 * Adds drop area for links from the overlay
 	 */
 	function addDropArea() {
+		// create statement drop target
 		$('.wikibase-entityview-main').droppable({
 			accept: function accept(dropped) {
 				return $(dropped).hasClass('dragndrop__link');
@@ -649,6 +689,28 @@ function dragNDrop() {
 				} else {
 					dropWikiLink(link);
 				}
+			},
+			hoverClass: 'dragndrop__droptarget',
+		});
+
+		// add reference drop target
+		$('.wikibase-statementview-references-container').droppable({
+			accept: function accept(dropped) {
+				return $(dropped).hasClass('dragndrop__link');
+			},
+			greedy: true, // https://api.jqueryui.com/droppable/#option-greedy
+			drop: function drop(event, ui) {
+				let link = $(ui.draggable);
+				let statement = $(this).closest('.wikibase-statementview');
+				if (!statement) {
+					alert('Statemnent not fount');
+					console.error(link, this);
+					return;
+				}
+				let claimId = statement.attr('id');
+				let url = link.attr('href');
+
+				addUrlReference(claimId, url);
 			},
 			hoverClass: 'dragndrop__droptarget',
 		});
