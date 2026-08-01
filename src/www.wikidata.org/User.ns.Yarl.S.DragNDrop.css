@@ -1,0 +1,90 @@
+.dragndrop__drag-overlay {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 1px;
+}
+
+.dragndrop__overlay {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  bottom: 0;
+  width: 400px;
+  height: calc(100vh - 20px);
+  z-index: 100;
+  background-color: white;
+  border: 1px solid #a2a9b1;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.25);
+  font-size: .85rem;
+}
+
+.dragndrop__statements-cointainer {
+  display: block !important;
+  float: left;
+  width: 100%;
+}
+
+.dragndrop__droptarget {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAG1BMVEUAAAD////////5+fz5+fz3+fz3+Pv3+Pv4+fxX7tMIAAAACHRSTlMAAgOgoafAxKjYStIAAACJSURBVHgB7dWxrsMwDENRJs/Ru///xR2ioUUrFHctzP2AhAcrxVOuM+85/nhJKCkIlBBNKCGaUEI0oYRoQs1iIuv4JBYzER0QLYgWRAuiBdGCiNe9s2I7rnOLLbb4AZE1g+Gnjl8VLYgWRAuiBXFiIN/uYERHNTGrbhMh2kSINhGiTYRoEyng/wFHsSw4H7SRXgAAAABJRU5ErkJggg==);
+}
+
+.dragndrop__button {
+  background: url(//upload.wikimedia.org/wikipedia/commons/thumb/d/d5/PICOL_Comment_add.svg/15px-PICOL_Comment_add.svg.png) no-repeat center;
+  float: right;
+  height: 14px;
+  margin-right: 0.5em;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.dragndrop__window-header .oo-ui-progressBarWidget {
+  position: fixed;
+  z-index: 1;
+  width: calc(100% - 10px);
+  left: 5px;
+  bottom: 5px;
+}
+
+.dragndrop__duplicates {
+  margin-bottom: .5em;
+  padding: .5em .5em 0;
+  border-radius: .2em;
+  background: #fbcc33;
+}
+
+.dragndrop__results {
+  margin-top: 1em;
+}
+
+.dragndrop__results-header {
+  display: inline-block;
+  height: 2em;
+  margin-bottom: .2em;
+}
+
+.dragndrop__results-list {
+  margin-left: .4em;
+  margin-top: .4em;
+}
+
+.dragndrop__results-header label {
+  line-height: 1.875em;
+  vertical-align: middle;
+}
+
+.dragndrop__result-item {
+  margin-bottom: .6em;
+  line-height: 1.4;
+}
+
+.dragndrop__result-item .oo-ui-buttonWidget {
+  float: left;
+}
+
+.dragndrop__result-item > .dragndrop__result-item-description {
+  padding-left: 51px;
+}
