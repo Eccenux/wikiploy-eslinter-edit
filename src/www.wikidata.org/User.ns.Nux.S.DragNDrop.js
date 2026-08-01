@@ -702,7 +702,8 @@ function dragNDrop() {
 				let target = this;
 				let $statement = $(target).closest('.wikibase-statementview');
 				if (!$statement.length) {
-					alert('Error. Statement view not found.');
+					OO.ui.alert(`Error: Statement view not found. Please report this; it should never happen.
+							If possible, please also check the F12 console and copy any errors from there.`);
 					console.error('DnD: Statement view not found for:', target);
 					return;
 				}
