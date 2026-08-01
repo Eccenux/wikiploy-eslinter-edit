@@ -111,7 +111,7 @@ function dragNDrop() {
 	};
 
 	// Load CSS
-	mw.loader.load('//www.wikidata.org/w/index.php?title=User:Yarl/DragNDrop.css&action=raw&ctype=text/css', 'text/css');
+	mw.loader.load('https://www.wikidata.org/w/index.php?title=User:Nux/DragNDrop.css&action=raw&ctype=text/css', 'text/css');
 
 	/**
 	 *
@@ -228,8 +228,8 @@ function dragNDrop() {
 						property: item.propertyId,
 					});
 
-				var $link = $('<a href="//www.wikidata.org/wiki/Property:' + item.propertyId + '" target="_blank">' + item.label + '<a/>');
-				var $propLink = $('<a href="//www.wikidata.org/wiki/Property:' + item.propertyId + '" target="_blank">' + item.propertyId + '</a>');
+				var $link = $('<a href="https://www.wikidata.org/wiki/Property:' + item.propertyId + '" target="_blank">' + item.label + '<a/>');
+				var $propLink = $('<a href="https://www.wikidata.org/wiki/Property:' + item.propertyId + '" target="_blank">' + item.propertyId + '</a>');
 
 				var $header = $('<div></div>')
 					.append([

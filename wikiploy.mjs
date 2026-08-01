@@ -33,6 +33,7 @@ ployBot.site = "pl.wikipedia.org";
 	//addPloyConfig(configs, String.raw`src\pl.wikipedia.org\MediaWiki.ns.Gadget-Popups.js`);
 
 	addPloyConfig(configs, String.raw`src\www.wikidata.org\User.ns.Nux.S.DragNDrop.js`);
+	addPloyConfig(configs, String.raw`src\www.wikidata.org\User.ns.Nux.S.DragNDrop.css`);
 
 	// custom summary
 	let summary = 'change from Github'; // default
