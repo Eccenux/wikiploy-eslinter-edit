@@ -88,3 +88,10 @@
 .dragndrop__result-item > .dragndrop__result-item-description {
   padding-left: 51px;
 }
+
+.wikibase-statementview-references-heading .u-dnd-count {
+	color: var(--color-base, #202122);
+	display: inline-block;
+	margin-top: .5em;
+	padding-top: 1px;
+}

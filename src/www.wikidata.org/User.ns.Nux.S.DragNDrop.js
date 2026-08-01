@@ -3,11 +3,7 @@
  *
  * Drag links from Wikipedia article frame to WD to create statements.
  *
- * For created statements adds "imported from" (P143) as reference.
- *
- * Note that the trigger to open Wikipedia article is a button beside interwiki.
- * The trigger button is using this image:
- * https://commons.wikimedia.org/wiki/File:PICOL_Comment_add.svg
+ * Instructions and features: [[User:Nux/DragNDrop]].
  *
  * Primary author: Yarl.
  * Other authors: Nux.
@@ -440,7 +436,7 @@ function dragNDrop() {
 	 *
 	 */
 	function genericAPIaction(json, callback) {
-		json.summary = '#drag-n-drop';
+		if (!json.summary) json.summary = '#drag-n-drop';
 		api
 			.postWithEditToken(json)
 			.done(callback)
@@ -598,7 +594,7 @@ function dragNDrop() {
 		var snaks = {
 			P143: [{
 				snaktype: 'value',
-				property: 'P143',
+				property: 'P143', // wiki ref
 				datavalue: {
 					type: 'wikibase-entityid',
 					value: { id: value },
@@ -624,6 +620,7 @@ function dragNDrop() {
 			action: 'wbsetreference',
 			statement: claimId,
 			snaks: JSON.stringify(snaks),
+			summary: '#drag-n-drop wiki-ref',
 		}, callback);
 	}
 
@@ -663,6 +660,7 @@ function dragNDrop() {
 			action: 'wbsetreference',
 			statement: claimId,
 			snaks: JSON.stringify(snaks),
+			summary: '#drag-n-drop url-ref',
 		}, callback);
 	}
 
@@ -700,17 +698,33 @@ function dragNDrop() {
 			},
 			greedy: true, // https://api.jqueryui.com/droppable/#option-greedy
 			drop: function drop(event, ui) {
-				let link = $(ui.draggable);
-				let statement = $(this).closest('.wikibase-statementview');
-				if (!statement) {
-					alert('Statemnent not fount');
-					console.error(link, this);
+				let $link = $(ui.draggable); // dragged link
+				let target = this;
+				let $statement = $(target).closest('.wikibase-statementview');
+				if (!$statement.length) {
+					alert('Error. Statement view not found.');
+					console.error('DnD: Statement view not found for:', target);
 					return;
 				}
-				let claimId = statement.attr('id');
-				let url = link.attr('href');
+				let claimId = $statement.attr('id');
+				let url = $link.attr('href');
 
-				addUrlReference(claimId, url);
+				addUrlReference(claimId, url, function done() {
+					let headEl = target.querySelector('.wikibase-statementview-references-heading');
+					if (!headEl) {
+						console.warn('DnD: weird, references-heading not found');
+						return;
+					}
+					let countEl = headEl.querySelector('.u-dnd-count');
+					if (!countEl) {
+						countEl = document.createElement('span');
+						countEl.className = 'u-dnd-count';
+						countEl.textContent = '+0';
+						headEl.appendChild(countEl);
+					}
+					let count = parseInt(countEl.textContent, 10) || 0;
+					countEl.textContent = '+' + (count + 1);
+				});
 			},
 			hoverClass: 'dragndrop__droptarget',
 		});
