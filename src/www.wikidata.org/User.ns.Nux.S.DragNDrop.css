@@ -95,3 +95,10 @@
 	margin-top: .5em;
 	padding-top: 1px;
 }
+
+/* article content */
+.dragndrop__drag-overlay {
+	.mw-editsection {
+		display: none;
+	}
+}
