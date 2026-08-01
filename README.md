@@ -1,7 +1,7 @@
 # wikiploy-eslinter-edit
 
 Developer tooling for editing, linting, and deploying Wikimedia JavaScript pages without
-[silly re-auth triggered by an even sillier incident](https://phabricator.wikimedia.org/T197137).
+[re-auth added in 2026](https://phabricator.wikimedia.org/T197137).
 
 This repository provides a small workflow around:
 
@@ -125,8 +125,15 @@ node wikiploy.mjs
 ## Final notes
 
 * `bot.config.*` files are ignored and must not be committed.
-* Downloaded source files are expected to live under `src/` (avoid changing automatic paths).
+* Downloaded source files will be placed under `src/`. This is handled automatically by `download.mjs`.
+* [VS Code](https://code.visualstudio.com/) is recommended for making edits, but it is not required. VS Code has built-in ESLint integration and terminals, though some other IDEs provide similar features.
 * Deployment is currently configured by editing `wikiploy.mjs` directly.
+
+So in short:
+0. `node download.mjs ...`
+0. Edit downloaded file(s).
+0. Add the relative path to `wikiploy.mjs`
+0. `node wikiploy.mjs`
 
 ## License
 

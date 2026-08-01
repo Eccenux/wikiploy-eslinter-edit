@@ -13,10 +13,12 @@ ployBot.site = "pl.wikipedia.org";
 
 (async () => {
 	// can use Windows or Linux style
-	let file = String.raw`src\commons.wikimedia.org\MediaWiki.ns.PermissionsRequestsDesk.js`;
-
 	const configs = [];
-	addPloyConfig(configs, file);
+	/**
+	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.PermissionsRequestsDesk.js`);
+	addPloyConfig(configs, String.raw`src\commons.wikimedia.org\MediaWiki.ns.Gadget-Cat-a-lot.js`);
+	/**/
+
 
 	// custom summary
 	let summary = 'change from Github'; // default

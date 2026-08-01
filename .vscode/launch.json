@@ -13,5 +13,17 @@
 			// wymagane dla setupSummary
 			"console": "integratedTerminal",
 		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Run wikiploy",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "wikiploy.mjs",
+			"cwd": "${workspaceFolder}",
+			// wymagane dla setupSummary
+			"console": "integratedTerminal",
+		},
 	]
 }
