@@ -46,7 +46,8 @@ function dragNDrop() {
 				loading: 'Loading...',
 				noSuggestedProperties: 'No suggestions found. You will find list of frequently used properties below.',
 				open: 'Open',
-				saveFail: 'Unfortunately, saving failed',
+				saveFail: 'Unfortunately, saving failed.', // OO.ui.alert(texts.saveFail, {title:`Drag'n'Drop`});
+				apiFail: 'Unfortunately, failed to load crucial data.',
 				searchPlaceholder: 'Search for property by name or number',
 				searchResults: 'Search results',
 				suggestedProperties: 'Suggested properties',
@@ -59,6 +60,7 @@ function dragNDrop() {
 				loading: 'Wczytywanie...',
 				open: 'Otwórz',
 				saveFail: 'Zapisywane nie powiodło się.',
+				apiFail: 'Pobieranie kluczowych danych nie powiodłow się.',
 				noSuggestedProperties: 'Brak wyników. Poniżej znajduje się lista często używanych właściwości.',
 				searchPlaceholder: 'Szukaj właściwości według nazwy lub numeru',
 				searchResults: 'Wyniki wyszukiwania',
@@ -441,7 +443,7 @@ function dragNDrop() {
 			.postWithEditToken(json)
 			.done(callback)
 			.fail(function err() {
-				OO.ui.alert(texts.saveFail);
+				OO.ui.alert(texts.saveFail, {title:`Drag'n'Drop`});
 				windowManager.closeWindow(dialog);
 			});
 	}
@@ -680,7 +682,7 @@ function dragNDrop() {
 					return;
 				}
 
-				if (link.hasClass('image')) {
+				if (link.hasClass('mw-file-description')) {
 					dropImage(link);
 				} else if (link.hasClass('external')) {
 					dropExtLink(link);
@@ -703,7 +705,7 @@ function dragNDrop() {
 				let $statement = $(target).closest('.wikibase-statementview');
 				if (!$statement.length) {
 					OO.ui.alert(`Error: Statement view not found. Please report this; it should never happen.
-							If possible, please also check the F12 console and copy any errors from there.`);
+							If possible, please also check the F12 console and copy any errors from there.`, {title:`Drag'n'Drop`});
 					console.error('DnD: Statement view not found for:', target);
 					return;
 				}
@@ -883,6 +885,10 @@ function dragNDrop() {
 			var pages = data.query.pages;
 
 			var targetPageId = Object.keys(pages)[0];
+			if (!pages[targetPageId]) {
+				OO.ui.alert(texts.apiFail, {title:`Drag'n'Drop`});
+				return;
+			}
 			var targetPageName = pages[targetPageId].title;
 			var targetPageWikidataId = pages[targetPageId].pageprops.wikibase_item;
 
@@ -976,6 +982,8 @@ function dragNDrop() {
 		if (!href || href.startsWith('#')) {
 			return;
 		}
+
+		link.attr('target', '_blank').attr('rel', 'noopener noreferrer');
 
 		if (link.hasClass('new')) {
 			removeLink(link);

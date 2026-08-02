@@ -101,4 +101,13 @@
 	.mw-editsection {
 		display: none;
 	}
+	.gallery {
+		display: flex;
+		flex-wrap: wrap;
+		li {
+			display: inline-block;
+			hyphens: auto;
+  			overflow-wrap: break-word;
+		}
+	}
 }
