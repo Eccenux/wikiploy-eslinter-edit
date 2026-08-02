@@ -40,6 +40,12 @@ ployBot.site = "pl.wikipedia.org";
 	let version = '';
 	await setupSummary(ployBot, version, summary); // get from cli
 
+	// change options (mostly for wikidata which is often above 5 seconds)
+	for (const config of configs) {
+		let bot = await ployBot.getBot(config);
+		// https://github.com/siddharthvp/mwn#features
+		bot.options.defaultParams.maxlag = 10;
+	}
 	// deploy
 	await ployBot.deploy(configs);
 })().catch(err => {
